@@ -7,7 +7,7 @@
 substitutions:
   device_name: home-assistant-voice-speaker
   friendly:   "Home Assistant Voice Speaker"
-  fw_version: "0.4.1-lvgl-aura-gc9a01a-led-sync"
+  fw_version: "6.0.0-lvgl-aura-gc9a01a-led-sync"
 
   # -------- SECURITY --------
   password:   "WiFi Password"
