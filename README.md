@@ -43,10 +43,20 @@ La migrazione di **Aura** sull’hardware originale del Voice Speaker HackMyHome
 | **Modello 3D** | Piatto superiore con slitta per il display disponibile in formato STL |
 
 > [!IMPORTANT]
-> Questa configurazione è stata sviluppata per la migrazione di Aura sul dispositivo audio ESP32-S3 originale, collegando esternamente un display **GC9A01A 240×240**. Non è il firmware della Waveshare Touch LCD 1.85C e non include funzioni touchscreen.
-
+> Questa configurazione è stata sviluppata per la migrazione di Aura sul dispositivo audio ESP32-S3 originale, collegando esternamente un display **GC9A01A 240×240**.
+> 
+## 🔗 Link utili
+### 🛒 ESP32-S3 AI Smart Speaker Development Board
+* **Waveshare:** [https://www.waveshare.com/?&aff_id=HackMyHome](https://www.waveshare.com/?&aff_id=HackMyHome)
+* **Amazon:** [https://amzn.to/40JLOQq](https://amzn.to/40JLOQq)
+### 🛒 Display LCD IPS 1,28" GC9A01 / GC9A01A
+* **Amazon:** [https://amzn.to/4ckpC4M](https://amzn.to/4ckpC4M)
+### 🌐 HackMyHome
+* [**ESP32-S3 AI Smart Speaker: da “all-in-board” a "Voice Assistant" - Home Assistant**](https://youtu.be/Lcp8FQ9NLyo)
+* [**Aggiungiamo un Display Circolare! 📺✨**](https://youtu.be/EsESK5aimu4)
+* [**YouTube: HackMyHome**](https://www.youtube.com/@HMH-Aura-Nova)
+* [**Facebook: HackMyHome**](https://www.facebook.com/profile.php?id=61583821941006)
 ---
-
 ## 🧭 Indice
 
 - [Obiettivo della migrazione](#-obiettivo-della-migrazione)
