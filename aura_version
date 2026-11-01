@@ -1730,7 +1730,7 @@ script:
             - script.execute:
                 id: ${script_play_sound_id}
                 priority: false
-                sound_file: !lambda return id(${wake_word_triggered_sound_id});
+                sound_file: !lambda return const_cast<audio::AudioFile *>(id(${wake_word_triggered_sound_id}));
 
             # Piccola attesa per lasciare partire e finire il ding.
             # Se il file è più lungo, aumenta a 500/600ms.
@@ -1820,7 +1820,7 @@ script:
       - script.execute:
           id: ${script_play_sound_id}
           priority: true
-          sound_file: !lambda return id(${timer_finished_sound_id});
+          sound_file: !lambda return const_cast<audio::AudioFile *>(id(${timer_finished_sound_id}));
 
   - id: ${script_enable_repeat_one_id}
     then:
@@ -1925,7 +1925,7 @@ script:
 
               auto time_now = id(${rtc_id}).now();
               if (time_now.hour == alarm_hour && time_now.minute == alarm_minute) {
-                auto action = id(${alarm_action_select_id}).state;
+                auto action = id(${saved_alarm_action_id});
                 if (action == "Riproduci suono") {
                   id(${timer_ringing_switch_id}).turn_on();
                 } else if (action == "Invia evento") {
@@ -2828,7 +2828,7 @@ wifi:
     - script.execute:
         id: ${script_play_sound_id}
         priority: true
-        sound_file: !lambda return id(${wake_word_triggered_sound_id});
+        sound_file: !lambda return const_cast<audio::AudioFile *>(id(${wake_word_triggered_sound_id}));
     - delay: 1500ms
     - if:
         condition:
@@ -2935,7 +2935,7 @@ api:
     - script.execute:
         id: ${script_play_sound_id}
         priority: true
-        sound_file: !lambda return id(${wake_word_triggered_sound_id});
+        sound_file: !lambda return const_cast<audio::AudioFile *>(id(${wake_word_triggered_sound_id}));
     - delay: 1500ms
     - script.execute: ${script_ensure_wake_word_running_id}
     - lambda: |-
