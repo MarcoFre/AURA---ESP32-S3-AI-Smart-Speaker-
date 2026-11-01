@@ -1749,6 +1749,32 @@ script:
       - lambda: |-
           id(${wake_word_flow_active_id}) = false;
 
+  # Music Assistant: chiudi il turno Assist quando inizia la riproduzione.
+  # Attendi la fine dell'eventuale breve risposta TTS, senza bloccare il player.
+  - id: aura_close_va_for_music
+    mode: restart
+    then:
+      - delay: 4s
+      - if:
+          condition:
+            and:
+              - voice_assistant.is_running:
+              - lambda: |-
+                  return id(${media_player_id}).state ==
+                         media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING;
+              - lambda: |-
+                  const int phase = id(${voice_assistant_phase_global_id});
+                  return phase == ${voice_assist_waiting_for_command_phase_id} ||
+                         phase == ${voice_assist_listening_for_command_phase_id};
+        then:
+          - logger.log:
+              level: INFO
+              format: "==== AURA: fine ascolto continuo per riproduzione musica"
+          - voice_assistant.stop:
+          - lambda: |-
+              id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
+          - script.execute: ${script_ensure_wake_word_running_id}
+
   - id: ${script_ensure_wake_word_running_id}
     mode: restart
     then:
@@ -1765,10 +1791,11 @@ script:
                   voice_assistant.is_running:
               - lambda: |-
                   return !id(${wake_word_flow_active_id});
+              # La wake word resta disponibile anche mentre Music Assistant suona.
+              # Durante un annuncio TTS, invece, non riattiviamo il microfono.
               - lambda: |-
-                  const auto s = id(${media_player_id}).state;
-                  return s != media_player::MediaPlayerState::MEDIA_PLAYER_STATE_PLAYING &&
-                         s != media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
+                  return id(${media_player_id}).state !=
+                         media_player::MediaPlayerState::MEDIA_PLAYER_STATE_ANNOUNCING;
           then:
             - if:
                 condition:
@@ -3395,6 +3422,13 @@ media_player:
           format: "==== MEDIAPLAYER: PLAY"
       - lambda: |-
           id(${display_awake_until_id}) = millis() + 300000UL;
+      # Quando parte la radio, termina soltanto la conversazione continua.
+      # Non ferma il media player: la riproduzione prosegue.
+      - if:
+          condition:
+            voice_assistant.is_running:
+          then:
+            - script.execute: aura_close_va_for_music
 
     on_pause:
       - logger.log:
