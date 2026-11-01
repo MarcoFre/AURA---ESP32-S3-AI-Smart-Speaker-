@@ -1766,14 +1766,14 @@ script:
                   const int phase = id(${voice_assistant_phase_global_id});
                   return phase == ${voice_assist_waiting_for_command_phase_id} ||
                          phase == ${voice_assist_listening_for_command_phase_id};
-        then:
-          - logger.log:
-              level: INFO
-              format: "==== AURA: fine ascolto continuo per riproduzione musica"
-          - voice_assistant.stop:
-          - lambda: |-
-              id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
-          - script.execute: ${script_ensure_wake_word_running_id}
+          then:
+            - logger.log:
+                level: INFO
+                format: "==== AURA: fine ascolto continuo per riproduzione musica"
+            - voice_assistant.stop:
+            - lambda: |-
+                id(${voice_assistant_phase_global_id}) = ${voice_assist_idle_phase_id};
+            - script.execute: ${script_ensure_wake_word_running_id}
 
   - id: ${script_ensure_wake_word_running_id}
     mode: restart
